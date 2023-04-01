@@ -1,0 +1,7 @@
+{
+    "cortex-debug.armToolchainPath": "C:\\DEV\\TOOLS\\ARM-GNU-TOOLCHAIN-12.2.MPACBTI-BET1-MINGW-W64-I686-ARM-NONE-EABI\\BIN",
+    "cortex-debug.openocdPath": "C:\\DEV\\TOOLS\\OPENOCD-20211118-0.11.0\\BIN\\OPENOCD.EXE",
+    "stm32-for-vscode.openOCDPath": "C:\\DEV\\TOOLS\\OPENOCD-20211118-0.11.0\\BIN\\OPENOCD.EXE",
+    "stm32-for-vscode.makePath": "C:\\DEV\\TOOLS\\MAKE-3.81\\BIN\\MAKE.EXE",
+    "stm32-for-vscode.armToolchainPath": "C:\\DEV\\TOOLS\\ARM-GNU-TOOLCHAIN-12.2.MPACBTI-BET1-MINGW-W64-I686-ARM-NONE-EABI\\BIN"
+}

@@ -1,0 +1,842 @@
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.arch armv6s-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.file	"FLASH_PAGE_G0.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Drivers/Flash/FLASH_PAGE_G0.c"
+  18              		.section	.text.GetPage,"ax",%progbits
+  19              		.align	1
+  20              		.syntax unified
+  21              		.code	16
+  22              		.thumb_func
+  24              	GetPage:
+  25              	.LVL0:
+  26              	.LFB293:
+   1:Drivers/Flash/FLASH_PAGE_G0.c **** 
+   2:Drivers/Flash/FLASH_PAGE_G0.c **** /**
+   3:Drivers/Flash/FLASH_PAGE_G0.c ****   *************************************************************************************************
+   4:Drivers/Flash/FLASH_PAGE_G0.c ****   *************************************************************************************************
+   5:Drivers/Flash/FLASH_PAGE_G0.c ****   *************************************************************************************************
+   6:Drivers/Flash/FLASH_PAGE_G0.c ****   File:	      FLASH_PAGE_F1.c
+   7:Drivers/Flash/FLASH_PAGE_G0.c ****   Modifier:   ControllersTech.com
+   8:Drivers/Flash/FLASH_PAGE_G0.c ****   Updated:    27th MAY 2021
+   9:Drivers/Flash/FLASH_PAGE_G0.c ****   *************************************************************************************************
+  10:Drivers/Flash/FLASH_PAGE_G0.c ****   Copyright (C) 2017 ControllersTech.com
+  11:Drivers/Flash/FLASH_PAGE_G0.c ****   This is a free software under the GNU license, you can redistribute it and/or modify it under the
+  12:Drivers/Flash/FLASH_PAGE_G0.c ****   of the GNU General Public License version 3 as published by the Free Software Foundation.
+  13:Drivers/Flash/FLASH_PAGE_G0.c ****   This software library is shared with public for educational purposes, without WARRANTY and Author
+  14:Drivers/Flash/FLASH_PAGE_G0.c ****   or indirectly by this software, read more about this on the GNU General Public License.
+  15:Drivers/Flash/FLASH_PAGE_G0.c ****   *************************************************************************************************
+  16:Drivers/Flash/FLASH_PAGE_G0.c **** */
+  17:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  18:Drivers/Flash/FLASH_PAGE_G0.c **** #include "FLASH_PAGE_G0.h"
+  19:Drivers/Flash/FLASH_PAGE_G0.c **** #include "string.h"
+  20:Drivers/Flash/FLASH_PAGE_G0.c **** #include "stdio.h"
+  21:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  22:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  23:Drivers/Flash/FLASH_PAGE_G0.c **** /* STM32F103 have 128 PAGES (Page 0 to Page 127) of 1 KB each. This makes up 128 KB Flash Memory
+  24:Drivers/Flash/FLASH_PAGE_G0.c ****  * Some STM32F103C8 have 64 KB FLASH Memory, so I guess they have Page 0 to Page 63 only.
+  25:Drivers/Flash/FLASH_PAGE_G0.c ****  */
+  26:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  27:Drivers/Flash/FLASH_PAGE_G0.c **** /* FLASH_PAGE_SIZE should be able to get the size of the Page according to the controller */
+  28:Drivers/Flash/FLASH_PAGE_G0.c **** static uint32_t GetPage(uint32_t Address)
+  29:Drivers/Flash/FLASH_PAGE_G0.c **** {
+  27              		.loc 1 29 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 2
+
+
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              		.loc 1 29 1 is_stmt 0 view .LVU1
+  33 0000 0100     		movs	r1, r0
+  30:Drivers/Flash/FLASH_PAGE_G0.c ****   for (int indx=0; indx<128; indx++)
+  34              		.loc 1 30 3 is_stmt 1 view .LVU2
+  35              	.LBB2:
+  36              		.loc 1 30 8 view .LVU3
+  37              	.LVL1:
+  38              		.loc 1 30 12 is_stmt 0 view .LVU4
+  39 0002 0023     		movs	r3, #0
+  40              		.loc 1 30 3 view .LVU5
+  41 0004 00E0     		b	.L2
+  42              	.LVL2:
+  43              	.L3:
+  44              		.loc 1 30 34 is_stmt 1 discriminator 2 view .LVU6
+  45 0006 0133     		adds	r3, r3, #1
+  46              	.LVL3:
+  47              	.L2:
+  48              		.loc 1 30 24 discriminator 1 view .LVU7
+  49 0008 7F2B     		cmp	r3, #127
+  50 000a 0BDC     		bgt	.L6
+  31:Drivers/Flash/FLASH_PAGE_G0.c ****   {
+  32:Drivers/Flash/FLASH_PAGE_G0.c **** 	  if((Address < (0x08000000 + (FLASH_PAGE_SIZE *(indx+1))) ) && (Address >= (0x08000000 + FLASH_PA
+  51              		.loc 1 32 4 view .LVU8
+  52              		.loc 1 32 30 is_stmt 0 view .LVU9
+  53 000c 064A     		ldr	r2, .L7
+  54 000e 9A18     		adds	r2, r3, r2
+  55 0010 D202     		lsls	r2, r2, #11
+  56              		.loc 1 32 6 view .LVU10
+  57 0012 8A42     		cmp	r2, r1
+  58 0014 F7D9     		bls	.L3
+  59              		.loc 1 32 90 discriminator 1 view .LVU11
+  60 0016 8022     		movs	r2, #128
+  61 0018 5202     		lsls	r2, r2, #9
+  62 001a 9818     		adds	r0, r3, r2
+  63 001c C002     		lsls	r0, r0, #11
+  64              		.loc 1 32 63 discriminator 1 view .LVU12
+  65 001e 8842     		cmp	r0, r1
+  66 0020 F1D8     		bhi	.L3
+  67              	.L1:
+  68              	.LBE2:
+  33:Drivers/Flash/FLASH_PAGE_G0.c **** 	  {
+  34:Drivers/Flash/FLASH_PAGE_G0.c **** 		  return (0x08000000 + FLASH_PAGE_SIZE*indx);
+  35:Drivers/Flash/FLASH_PAGE_G0.c **** 	  }
+  36:Drivers/Flash/FLASH_PAGE_G0.c ****   }
+  37:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  38:Drivers/Flash/FLASH_PAGE_G0.c ****   return 0;
+  39:Drivers/Flash/FLASH_PAGE_G0.c **** }
+  69              		.loc 1 39 1 view .LVU13
+  70              		@ sp needed
+  71 0022 7047     		bx	lr
+  72              	.L6:
+  38:Drivers/Flash/FLASH_PAGE_G0.c **** }
+  73              		.loc 1 38 10 view .LVU14
+  74 0024 0020     		movs	r0, #0
+  75 0026 FCE7     		b	.L1
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 3
+
+
+  76              	.L8:
+  77              		.align	2
+  78              	.L7:
+  79 0028 01000100 		.word	65537
+  80              		.cfi_endproc
+  81              	.LFE293:
+  83              		.section	.text.float2Bytes,"ax",%progbits
+  84              		.align	1
+  85              		.global	float2Bytes
+  86              		.syntax unified
+  87              		.code	16
+  88              		.thumb_func
+  90              	float2Bytes:
+  91              	.LVL4:
+  92              	.LFB294:
+  40:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  41:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  42:Drivers/Flash/FLASH_PAGE_G0.c **** uint8_t bytes_temp[4];
+  43:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  44:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  45:Drivers/Flash/FLASH_PAGE_G0.c **** void float2Bytes(uint8_t * ftoa_bytes_temp,float float_variable)
+  46:Drivers/Flash/FLASH_PAGE_G0.c **** {
+  93              		.loc 1 46 1 is_stmt 1 view -0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 8
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98              		.loc 1 46 1 is_stmt 0 view .LVU16
+  99 0000 82B0     		sub	sp, sp, #8
+ 100              	.LCFI0:
+ 101              		.cfi_def_cfa_offset 8
+  47:Drivers/Flash/FLASH_PAGE_G0.c ****     union {
+ 102              		.loc 1 47 5 is_stmt 1 view .LVU17
+  48:Drivers/Flash/FLASH_PAGE_G0.c ****       float a;
+  49:Drivers/Flash/FLASH_PAGE_G0.c ****       uint8_t bytes[4];
+  50:Drivers/Flash/FLASH_PAGE_G0.c ****     } thing;
+  51:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  52:Drivers/Flash/FLASH_PAGE_G0.c ****     thing.a = float_variable;
+ 103              		.loc 1 52 5 view .LVU18
+ 104              		.loc 1 52 13 is_stmt 0 view .LVU19
+ 105 0002 0191     		str	r1, [sp, #4]
+  53:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  54:Drivers/Flash/FLASH_PAGE_G0.c ****     for (uint8_t i = 0; i < 4; i++) {
+ 106              		.loc 1 54 5 is_stmt 1 view .LVU20
+ 107              	.LBB3:
+ 108              		.loc 1 54 10 view .LVU21
+ 109              	.LVL5:
+ 110              		.loc 1 54 18 is_stmt 0 view .LVU22
+ 111 0004 0023     		movs	r3, #0
+ 112              		.loc 1 54 5 view .LVU23
+ 113 0006 04E0     		b	.L10
+ 114              	.LVL6:
+ 115              	.L11:
+  55:Drivers/Flash/FLASH_PAGE_G0.c ****       ftoa_bytes_temp[i] = thing.bytes[i];
+ 116              		.loc 1 55 7 is_stmt 1 discriminator 3 view .LVU24
+ 117              		.loc 1 55 39 is_stmt 0 discriminator 3 view .LVU25
+ 118 0008 01AA     		add	r2, sp, #4
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 4
+
+
+ 119 000a D25C     		ldrb	r2, [r2, r3]
+ 120              		.loc 1 55 26 discriminator 3 view .LVU26
+ 121 000c C254     		strb	r2, [r0, r3]
+  54:Drivers/Flash/FLASH_PAGE_G0.c ****       ftoa_bytes_temp[i] = thing.bytes[i];
+ 122              		.loc 1 54 33 is_stmt 1 discriminator 3 view .LVU27
+ 123 000e 0133     		adds	r3, r3, #1
+ 124              	.LVL7:
+  54:Drivers/Flash/FLASH_PAGE_G0.c ****       ftoa_bytes_temp[i] = thing.bytes[i];
+ 125              		.loc 1 54 33 is_stmt 0 discriminator 3 view .LVU28
+ 126 0010 DBB2     		uxtb	r3, r3
+ 127              	.LVL8:
+ 128              	.L10:
+  54:Drivers/Flash/FLASH_PAGE_G0.c ****       ftoa_bytes_temp[i] = thing.bytes[i];
+ 129              		.loc 1 54 27 is_stmt 1 discriminator 1 view .LVU29
+ 130 0012 032B     		cmp	r3, #3
+ 131 0014 F8D9     		bls	.L11
+ 132              	.LBE3:
+  56:Drivers/Flash/FLASH_PAGE_G0.c ****     }
+  57:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  58:Drivers/Flash/FLASH_PAGE_G0.c **** }
+ 133              		.loc 1 58 1 is_stmt 0 view .LVU30
+ 134 0016 02B0     		add	sp, sp, #8
+ 135              		@ sp needed
+ 136 0018 7047     		bx	lr
+ 137              		.cfi_endproc
+ 138              	.LFE294:
+ 140              		.section	.text.Bytes2float,"ax",%progbits
+ 141              		.align	1
+ 142              		.global	Bytes2float
+ 143              		.syntax unified
+ 144              		.code	16
+ 145              		.thumb_func
+ 147              	Bytes2float:
+ 148              	.LVL9:
+ 149              	.LFB295:
+  59:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  60:Drivers/Flash/FLASH_PAGE_G0.c **** float Bytes2float(uint8_t * ftoa_bytes_temp)
+  61:Drivers/Flash/FLASH_PAGE_G0.c **** {
+ 150              		.loc 1 61 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 8
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 155              		.loc 1 61 1 is_stmt 0 view .LVU32
+ 156 0000 82B0     		sub	sp, sp, #8
+ 157              	.LCFI1:
+ 158              		.cfi_def_cfa_offset 8
+  62:Drivers/Flash/FLASH_PAGE_G0.c ****     union {
+ 159              		.loc 1 62 5 is_stmt 1 view .LVU33
+  63:Drivers/Flash/FLASH_PAGE_G0.c ****       float a;
+  64:Drivers/Flash/FLASH_PAGE_G0.c ****       uint8_t bytes[4];
+  65:Drivers/Flash/FLASH_PAGE_G0.c ****     } thing;
+  66:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  67:Drivers/Flash/FLASH_PAGE_G0.c ****     for (uint8_t i = 0; i < 4; i++) {
+ 160              		.loc 1 67 5 view .LVU34
+ 161              	.LBB4:
+ 162              		.loc 1 67 10 view .LVU35
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 5
+
+
+ 163              	.LVL10:
+ 164              		.loc 1 67 18 is_stmt 0 view .LVU36
+ 165 0002 0023     		movs	r3, #0
+ 166              		.loc 1 67 5 view .LVU37
+ 167 0004 04E0     		b	.L13
+ 168              	.LVL11:
+ 169              	.L14:
+  68:Drivers/Flash/FLASH_PAGE_G0.c ****     	thing.bytes[i] = ftoa_bytes_temp[i];
+ 170              		.loc 1 68 6 is_stmt 1 discriminator 3 view .LVU38
+ 171              		.loc 1 68 38 is_stmt 0 discriminator 3 view .LVU39
+ 172 0006 C15C     		ldrb	r1, [r0, r3]
+ 173              		.loc 1 68 21 discriminator 3 view .LVU40
+ 174 0008 01AA     		add	r2, sp, #4
+ 175 000a D154     		strb	r1, [r2, r3]
+  67:Drivers/Flash/FLASH_PAGE_G0.c ****     	thing.bytes[i] = ftoa_bytes_temp[i];
+ 176              		.loc 1 67 33 is_stmt 1 discriminator 3 view .LVU41
+ 177 000c 0133     		adds	r3, r3, #1
+ 178              	.LVL12:
+  67:Drivers/Flash/FLASH_PAGE_G0.c ****     	thing.bytes[i] = ftoa_bytes_temp[i];
+ 179              		.loc 1 67 33 is_stmt 0 discriminator 3 view .LVU42
+ 180 000e DBB2     		uxtb	r3, r3
+ 181              	.LVL13:
+ 182              	.L13:
+  67:Drivers/Flash/FLASH_PAGE_G0.c ****     	thing.bytes[i] = ftoa_bytes_temp[i];
+ 183              		.loc 1 67 27 is_stmt 1 discriminator 1 view .LVU43
+ 184 0010 032B     		cmp	r3, #3
+ 185 0012 F8D9     		bls	.L14
+ 186              	.LBE4:
+  69:Drivers/Flash/FLASH_PAGE_G0.c ****     }
+  70:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  71:Drivers/Flash/FLASH_PAGE_G0.c ****    float float_variable =  thing.a;
+ 187              		.loc 1 71 4 view .LVU44
+ 188              		.loc 1 71 10 is_stmt 0 view .LVU45
+ 189 0014 0198     		ldr	r0, [sp, #4]
+ 190              	.LVL14:
+  72:Drivers/Flash/FLASH_PAGE_G0.c ****    return float_variable;
+ 191              		.loc 1 72 4 is_stmt 1 view .LVU46
+  73:Drivers/Flash/FLASH_PAGE_G0.c **** }
+ 192              		.loc 1 73 1 is_stmt 0 view .LVU47
+ 193 0016 02B0     		add	sp, sp, #8
+ 194              		@ sp needed
+ 195 0018 7047     		bx	lr
+ 196              		.cfi_endproc
+ 197              	.LFE295:
+ 199              		.section	.text.Flash_Write_Data,"ax",%progbits
+ 200              		.align	1
+ 201              		.global	Flash_Write_Data
+ 202              		.syntax unified
+ 203              		.code	16
+ 204              		.thumb_func
+ 206              	Flash_Write_Data:
+ 207              	.LVL15:
+ 208              	.LFB296:
+  74:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  75:Drivers/Flash/FLASH_PAGE_G0.c **** uint32_t Flash_Write_Data (uint32_t StartPageAddress, uint32_t *Data, uint16_t numberofwords)
+  76:Drivers/Flash/FLASH_PAGE_G0.c **** {
+ 209              		.loc 1 76 1 is_stmt 1 view -0
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 6
+
+
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 8
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              		.loc 1 76 1 is_stmt 0 view .LVU49
+ 214 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 215              	.LCFI2:
+ 216              		.cfi_def_cfa_offset 20
+ 217              		.cfi_offset 4, -20
+ 218              		.cfi_offset 5, -16
+ 219              		.cfi_offset 6, -12
+ 220              		.cfi_offset 7, -8
+ 221              		.cfi_offset 14, -4
+ 222 0002 C646     		mov	lr, r8
+ 223 0004 00B5     		push	{lr}
+ 224              	.LCFI3:
+ 225              		.cfi_def_cfa_offset 24
+ 226              		.cfi_offset 8, -24
+ 227 0006 82B0     		sub	sp, sp, #8
+ 228              	.LCFI4:
+ 229              		.cfi_def_cfa_offset 32
+ 230 0008 0500     		movs	r5, r0
+ 231 000a 0E00     		movs	r6, r1
+ 232 000c 1400     		movs	r4, r2
+  77:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  78:Drivers/Flash/FLASH_PAGE_G0.c **** 	static FLASH_EraseInitTypeDef EraseInitStruct;
+ 233              		.loc 1 78 2 is_stmt 1 view .LVU50
+  79:Drivers/Flash/FLASH_PAGE_G0.c **** 	uint32_t PAGEError;
+ 234              		.loc 1 79 2 view .LVU51
+  80:Drivers/Flash/FLASH_PAGE_G0.c **** 	int sofar=0;
+ 235              		.loc 1 80 2 view .LVU52
+ 236              	.LVL16:
+  81:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  82:Drivers/Flash/FLASH_PAGE_G0.c **** 	  /* Unlock the Flash to enable the flash control register access *************/
+  83:Drivers/Flash/FLASH_PAGE_G0.c **** 	   HAL_FLASH_Unlock();
+ 237              		.loc 1 83 5 view .LVU53
+ 238 000e FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 239              	.LVL17:
+  84:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  85:Drivers/Flash/FLASH_PAGE_G0.c **** 	   /* Erase the user Flash area*/
+  86:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  87:Drivers/Flash/FLASH_PAGE_G0.c **** 	  uint32_t StartPage = GetPage(StartPageAddress);
+ 240              		.loc 1 87 4 view .LVU54
+ 241              		.loc 1 87 25 is_stmt 0 view .LVU55
+ 242 0012 2800     		movs	r0, r5
+ 243 0014 FFF7FEFF 		bl	GetPage
+ 244              	.LVL18:
+ 245 0018 8046     		mov	r8, r0
+ 246              	.LVL19:
+  88:Drivers/Flash/FLASH_PAGE_G0.c **** 	  uint32_t EndPageAdress = StartPageAddress + numberofwords*4;
+ 247              		.loc 1 88 4 is_stmt 1 view .LVU56
+ 248              		.loc 1 88 61 is_stmt 0 view .LVU57
+ 249 001a 2700     		movs	r7, r4
+ 250 001c A400     		lsls	r4, r4, #2
+ 251              		.loc 1 88 13 view .LVU58
+ 252 001e 6019     		adds	r0, r4, r5
+ 253              	.LVL20:
+  89:Drivers/Flash/FLASH_PAGE_G0.c **** 	  uint32_t EndPage = GetPage(EndPageAdress);
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 7
+
+
+ 254              		.loc 1 89 4 is_stmt 1 view .LVU59
+ 255              		.loc 1 89 23 is_stmt 0 view .LVU60
+ 256 0020 FFF7FEFF 		bl	GetPage
+ 257              	.LVL21:
+ 258              		.loc 1 89 23 view .LVU61
+ 259 0024 0300     		movs	r3, r0
+ 260              	.LVL22:
+  90:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  91:Drivers/Flash/FLASH_PAGE_G0.c **** 	   /* Fill EraseInit structure*/
+  92:Drivers/Flash/FLASH_PAGE_G0.c **** 	   EraseInitStruct.TypeErase   = FLASH_TYPEERASE_PAGES;
+ 261              		.loc 1 92 5 is_stmt 1 view .LVU62
+ 262              		.loc 1 92 33 is_stmt 0 view .LVU63
+ 263 0026 1548     		ldr	r0, .L23
+ 264              	.LVL23:
+ 265              		.loc 1 92 33 view .LVU64
+ 266 0028 0222     		movs	r2, #2
+ 267 002a 0260     		str	r2, [r0]
+  93:Drivers/Flash/FLASH_PAGE_G0.c **** 	   EraseInitStruct.Page = StartPage;
+ 268              		.loc 1 93 5 is_stmt 1 view .LVU65
+ 269              		.loc 1 93 26 is_stmt 0 view .LVU66
+ 270 002c 4246     		mov	r2, r8
+ 271 002e 8260     		str	r2, [r0, #8]
+  94:Drivers/Flash/FLASH_PAGE_G0.c **** 	   EraseInitStruct.NbPages     = ((EndPage - StartPage)/FLASH_PAGE_SIZE) +1;
+ 272              		.loc 1 94 5 is_stmt 1 view .LVU67
+ 273              		.loc 1 94 45 is_stmt 0 view .LVU68
+ 274 0030 9B1A     		subs	r3, r3, r2
+ 275              	.LVL24:
+ 276              		.loc 1 94 57 view .LVU69
+ 277 0032 DB0A     		lsrs	r3, r3, #11
+ 278              		.loc 1 94 75 view .LVU70
+ 279 0034 0133     		adds	r3, r3, #1
+ 280              		.loc 1 94 33 view .LVU71
+ 281 0036 C360     		str	r3, [r0, #12]
+  95:Drivers/Flash/FLASH_PAGE_G0.c **** 
+  96:Drivers/Flash/FLASH_PAGE_G0.c **** 	   if (HAL_FLASHEx_Erase(&EraseInitStruct, &PAGEError) != HAL_OK)
+ 282              		.loc 1 96 5 is_stmt 1 view .LVU72
+ 283              		.loc 1 96 9 is_stmt 0 view .LVU73
+ 284 0038 01A9     		add	r1, sp, #4
+ 285 003a FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 286              	.LVL25:
+ 287              		.loc 1 96 8 view .LVU74
+ 288 003e 0028     		cmp	r0, #0
+ 289 0040 0ED1     		bne	.L21
+  80:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 290              		.loc 1 80 6 view .LVU75
+ 291 0042 0024     		movs	r4, #0
+ 292              	.LVL26:
+ 293              	.L16:
+  97:Drivers/Flash/FLASH_PAGE_G0.c **** 	   {
+  98:Drivers/Flash/FLASH_PAGE_G0.c **** 	     /*Error occurred while page erase.*/
+  99:Drivers/Flash/FLASH_PAGE_G0.c **** 		  return HAL_FLASH_GetError ();
+ 100:Drivers/Flash/FLASH_PAGE_G0.c **** 	   }
+ 101:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 102:Drivers/Flash/FLASH_PAGE_G0.c **** 	   /* Program the user Flash area word by word*/
+ 103:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 104:Drivers/Flash/FLASH_PAGE_G0.c **** 	   while (sofar<numberofwords)
+ 294              		.loc 1 104 17 is_stmt 1 view .LVU76
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 8
+
+
+ 295 0044 A742     		cmp	r7, r4
+ 296 0046 11DD     		ble	.L22
+ 105:Drivers/Flash/FLASH_PAGE_G0.c **** 	   {
+ 106:Drivers/Flash/FLASH_PAGE_G0.c **** 	     if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, StartPageAddress, Data[sofar]) == HAL_OK)
+ 297              		.loc 1 106 7 view .LVU77
+ 298              		.loc 1 106 81 is_stmt 0 view .LVU78
+ 299 0048 A300     		lsls	r3, r4, #2
+ 300 004a 9A59     		ldr	r2, [r3, r6]
+ 301              		.loc 1 106 11 view .LVU79
+ 302 004c 0023     		movs	r3, #0
+ 303 004e 2900     		movs	r1, r5
+ 304 0050 0120     		movs	r0, #1
+ 305 0052 FFF7FEFF 		bl	HAL_FLASH_Program
+ 306              	.LVL27:
+ 307              		.loc 1 106 10 view .LVU80
+ 308 0056 0028     		cmp	r0, #0
+ 309 0058 05D1     		bne	.L18
+ 107:Drivers/Flash/FLASH_PAGE_G0.c **** 	     {
+ 108:Drivers/Flash/FLASH_PAGE_G0.c **** 	    	 StartPageAddress += 4;  // use StartPageAddress += 2 for half word and 8 for double word
+ 310              		.loc 1 108 8 is_stmt 1 view .LVU81
+ 311              		.loc 1 108 25 is_stmt 0 view .LVU82
+ 312 005a 0435     		adds	r5, r5, #4
+ 313              	.LVL28:
+ 109:Drivers/Flash/FLASH_PAGE_G0.c **** 	    	 sofar++;
+ 314              		.loc 1 109 8 is_stmt 1 view .LVU83
+ 315              		.loc 1 109 13 is_stmt 0 view .LVU84
+ 316 005c 0134     		adds	r4, r4, #1
+ 317              	.LVL29:
+ 318              		.loc 1 109 13 view .LVU85
+ 319 005e F1E7     		b	.L16
+ 320              	.LVL30:
+ 321              	.L21:
+  99:Drivers/Flash/FLASH_PAGE_G0.c **** 	   }
+ 322              		.loc 1 99 5 is_stmt 1 view .LVU86
+  99:Drivers/Flash/FLASH_PAGE_G0.c **** 	   }
+ 323              		.loc 1 99 12 is_stmt 0 view .LVU87
+ 324 0060 FFF7FEFF 		bl	HAL_FLASH_GetError
+ 325              	.LVL31:
+ 326 0064 05E0     		b	.L15
+ 327              	.LVL32:
+ 328              	.L18:
+ 110:Drivers/Flash/FLASH_PAGE_G0.c **** 	     }
+ 111:Drivers/Flash/FLASH_PAGE_G0.c **** 	     else
+ 112:Drivers/Flash/FLASH_PAGE_G0.c **** 	     {
+ 113:Drivers/Flash/FLASH_PAGE_G0.c **** 	       /* Error occurred while writing data in Flash memory*/
+ 114:Drivers/Flash/FLASH_PAGE_G0.c **** 	    	 return HAL_FLASH_GetError ();
+ 329              		.loc 1 114 8 is_stmt 1 view .LVU88
+ 330              		.loc 1 114 15 is_stmt 0 view .LVU89
+ 331 0066 FFF7FEFF 		bl	HAL_FLASH_GetError
+ 332              	.LVL33:
+ 333 006a 02E0     		b	.L15
+ 334              	.L22:
+ 115:Drivers/Flash/FLASH_PAGE_G0.c **** 	     }
+ 116:Drivers/Flash/FLASH_PAGE_G0.c **** 	   }
+ 117:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 118:Drivers/Flash/FLASH_PAGE_G0.c **** 	   /* Lock the Flash to disable the flash control register access (recommended
+ 119:Drivers/Flash/FLASH_PAGE_G0.c **** 	      to protect the FLASH memory against possible unwanted operation) *********/
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 9
+
+
+ 120:Drivers/Flash/FLASH_PAGE_G0.c **** 	   HAL_FLASH_Lock();
+ 335              		.loc 1 120 5 is_stmt 1 view .LVU90
+ 336 006c FFF7FEFF 		bl	HAL_FLASH_Lock
+ 337              	.LVL34:
+ 121:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 122:Drivers/Flash/FLASH_PAGE_G0.c **** 	   return 0;
+ 338              		.loc 1 122 5 view .LVU91
+ 339              		.loc 1 122 12 is_stmt 0 view .LVU92
+ 340 0070 0020     		movs	r0, #0
+ 341              	.LVL35:
+ 342              	.L15:
+ 123:Drivers/Flash/FLASH_PAGE_G0.c **** }
+ 343              		.loc 1 123 1 view .LVU93
+ 344 0072 02B0     		add	sp, sp, #8
+ 345              		@ sp needed
+ 346              	.LVL36:
+ 347              	.LVL37:
+ 348              	.LVL38:
+ 349              	.LVL39:
+ 350              		.loc 1 123 1 view .LVU94
+ 351 0074 80BC     		pop	{r7}
+ 352 0076 B846     		mov	r8, r7
+ 353 0078 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 354              	.L24:
+ 355 007a C046     		.align	2
+ 356              	.L23:
+ 357 007c 00000000 		.word	EraseInitStruct.0
+ 358              		.cfi_endproc
+ 359              	.LFE296:
+ 361              		.section	.text.Flash_Read_Data,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	Flash_Read_Data
+ 364              		.syntax unified
+ 365              		.code	16
+ 366              		.thumb_func
+ 368              	Flash_Read_Data:
+ 369              	.LFB297:
+ 124:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 125:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 126:Drivers/Flash/FLASH_PAGE_G0.c **** void Flash_Read_Data (uint32_t StartPageAddress, uint32_t *RxBuf, uint16_t numberofwords)
+ 127:Drivers/Flash/FLASH_PAGE_G0.c **** {
+ 370              		.loc 1 127 1 is_stmt 1 view -0
+ 371              		.cfi_startproc
+ 372              		@ args = 0, pretend = 0, frame = 0
+ 373              		@ frame_needed = 0, uses_anonymous_args = 0
+ 374              		@ link register save eliminated.
+ 375              	.LVL40:
+ 376              	.L26:
+ 128:Drivers/Flash/FLASH_PAGE_G0.c **** 	while (1)
+ 377              		.loc 1 128 2 view .LVU96
+ 129:Drivers/Flash/FLASH_PAGE_G0.c **** 	{
+ 130:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 131:Drivers/Flash/FLASH_PAGE_G0.c **** 		*RxBuf = *(__IO uint32_t *)StartPageAddress;
+ 378              		.loc 1 131 3 view .LVU97
+ 379              		.loc 1 131 12 is_stmt 0 view .LVU98
+ 380 0000 08C8     		ldmia	r0!, {r3}
+ 381              		.loc 1 131 10 view .LVU99
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 10
+
+
+ 382 0002 08C1     		stmia	r1!, {r3}
+ 132:Drivers/Flash/FLASH_PAGE_G0.c **** 		StartPageAddress += 4;
+ 383              		.loc 1 132 3 is_stmt 1 view .LVU100
+ 384              	.LVL41:
+ 133:Drivers/Flash/FLASH_PAGE_G0.c **** 		RxBuf++;
+ 385              		.loc 1 133 3 view .LVU101
+ 134:Drivers/Flash/FLASH_PAGE_G0.c **** 		if (!(numberofwords--)) break;
+ 386              		.loc 1 134 3 view .LVU102
+ 387 0004 1300     		movs	r3, r2
+ 388              		.loc 1 134 22 is_stmt 0 view .LVU103
+ 389 0006 013A     		subs	r2, r2, #1
+ 390 0008 92B2     		uxth	r2, r2
+ 391              	.LVL42:
+ 392              		.loc 1 134 6 view .LVU104
+ 393 000a 002B     		cmp	r3, #0
+ 394 000c F8D1     		bne	.L26
+ 135:Drivers/Flash/FLASH_PAGE_G0.c **** 	}
+ 136:Drivers/Flash/FLASH_PAGE_G0.c **** }
+ 395              		.loc 1 136 1 view .LVU105
+ 396              		@ sp needed
+ 397 000e 7047     		bx	lr
+ 398              		.cfi_endproc
+ 399              	.LFE297:
+ 401              		.section	.text.Convert_To_Str,"ax",%progbits
+ 402              		.align	1
+ 403              		.global	Convert_To_Str
+ 404              		.syntax unified
+ 405              		.code	16
+ 406              		.thumb_func
+ 408              	Convert_To_Str:
+ 409              	.LVL43:
+ 410              	.LFB298:
+ 137:Drivers/Flash/FLASH_PAGE_G0.c **** void Convert_To_Str (uint32_t *Data, char *Buf)
+ 138:Drivers/Flash/FLASH_PAGE_G0.c **** {
+ 411              		.loc 1 138 1 is_stmt 1 view -0
+ 412              		.cfi_startproc
+ 413              		@ args = 0, pretend = 0, frame = 0
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415              		.loc 1 138 1 is_stmt 0 view .LVU107
+ 416 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 417              	.LCFI5:
+ 418              		.cfi_def_cfa_offset 24
+ 419              		.cfi_offset 3, -24
+ 420              		.cfi_offset 4, -20
+ 421              		.cfi_offset 5, -16
+ 422              		.cfi_offset 6, -12
+ 423              		.cfi_offset 7, -8
+ 424              		.cfi_offset 14, -4
+ 425 0002 0400     		movs	r4, r0
+ 426 0004 0D00     		movs	r5, r1
+ 139:Drivers/Flash/FLASH_PAGE_G0.c **** 	int numberofbytes = ((strlen((char *)Data)/4) + ((strlen((char *)Data) % 4) != 0)) *4;
+ 427              		.loc 1 139 2 is_stmt 1 view .LVU108
+ 428              		.loc 1 139 24 is_stmt 0 view .LVU109
+ 429 0006 FFF7FEFF 		bl	strlen
+ 430              	.LVL44:
+ 431              		.loc 1 139 44 view .LVU110
+ 432 000a 8208     		lsrs	r2, r0, #2
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 11
+
+
+ 433              		.loc 1 139 73 view .LVU111
+ 434 000c 0323     		movs	r3, #3
+ 435 000e 0340     		ands	r3, r0
+ 436              		.loc 1 139 78 view .LVU112
+ 437 0010 591E     		subs	r1, r3, #1
+ 438 0012 8B41     		sbcs	r3, r3, r1
+ 439              		.loc 1 139 48 view .LVU113
+ 440 0014 D018     		adds	r0, r2, r3
+ 441              		.loc 1 139 85 view .LVU114
+ 442 0016 8000     		lsls	r0, r0, #2
+ 443              	.LVL45:
+ 140:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 141:Drivers/Flash/FLASH_PAGE_G0.c **** 	for (int i=0; i<numberofbytes; i++)
+ 444              		.loc 1 141 2 is_stmt 1 view .LVU115
+ 445              	.LBB5:
+ 446              		.loc 1 141 7 view .LVU116
+ 447              		.loc 1 141 11 is_stmt 0 view .LVU117
+ 448 0018 0021     		movs	r1, #0
+ 449              		.loc 1 141 2 view .LVU118
+ 450 001a 0FE0     		b	.L28
+ 451              	.LVL46:
+ 452              	.L29:
+ 142:Drivers/Flash/FLASH_PAGE_G0.c **** 	{
+ 143:Drivers/Flash/FLASH_PAGE_G0.c **** 		Buf[i] = Data[i/4]>>(8*(i%4));
+ 453              		.loc 1 143 3 is_stmt 1 discriminator 3 view .LVU119
+ 454              		.loc 1 143 18 is_stmt 0 discriminator 3 view .LVU120
+ 455 001c CE17     		asrs	r6, r1, #31
+ 456 001e 0323     		movs	r3, #3
+ 457 0020 1A00     		movs	r2, r3
+ 458 0022 3240     		ands	r2, r6
+ 459 0024 5218     		adds	r2, r2, r1
+ 460 0026 9210     		asrs	r2, r2, #2
+ 461              		.loc 1 143 16 discriminator 3 view .LVU121
+ 462 0028 9200     		lsls	r2, r2, #2
+ 463 002a 1759     		ldr	r7, [r2, r4]
+ 464              		.loc 1 143 28 discriminator 3 view .LVU122
+ 465 002c B20F     		lsrs	r2, r6, #30
+ 466 002e 8E18     		adds	r6, r1, r2
+ 467 0030 3340     		ands	r3, r6
+ 468 0032 9B1A     		subs	r3, r3, r2
+ 469              		.loc 1 143 25 discriminator 3 view .LVU123
+ 470 0034 DB00     		lsls	r3, r3, #3
+ 471              		.loc 1 143 21 discriminator 3 view .LVU124
+ 472 0036 DF40     		lsrs	r7, r7, r3
+ 473              		.loc 1 143 10 discriminator 3 view .LVU125
+ 474 0038 6F54     		strb	r7, [r5, r1]
+ 141:Drivers/Flash/FLASH_PAGE_G0.c **** 	{
+ 475              		.loc 1 141 34 is_stmt 1 discriminator 3 view .LVU126
+ 476 003a 0131     		adds	r1, r1, #1
+ 477              	.LVL47:
+ 478              	.L28:
+ 141:Drivers/Flash/FLASH_PAGE_G0.c **** 	{
+ 479              		.loc 1 141 17 discriminator 1 view .LVU127
+ 480 003c 8142     		cmp	r1, r0
+ 481 003e EDDB     		blt	.L29
+ 482              	.LBE5:
+ 144:Drivers/Flash/FLASH_PAGE_G0.c **** 	}
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 12
+
+
+ 145:Drivers/Flash/FLASH_PAGE_G0.c **** }
+ 483              		.loc 1 145 1 is_stmt 0 view .LVU128
+ 484              		@ sp needed
+ 485              	.LVL48:
+ 486              	.LVL49:
+ 487              		.loc 1 145 1 view .LVU129
+ 488 0040 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 489              		.cfi_endproc
+ 490              	.LFE298:
+ 492              		.section	.text.Flash_Write_NUM,"ax",%progbits
+ 493              		.align	1
+ 494              		.global	Flash_Write_NUM
+ 495              		.syntax unified
+ 496              		.code	16
+ 497              		.thumb_func
+ 499              	Flash_Write_NUM:
+ 500              	.LVL50:
+ 501              	.LFB299:
+ 146:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 147:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 148:Drivers/Flash/FLASH_PAGE_G0.c **** void Flash_Write_NUM (uint32_t StartSectorAddress, float Num)
+ 149:Drivers/Flash/FLASH_PAGE_G0.c **** {
+ 502              		.loc 1 149 1 is_stmt 1 view -0
+ 503              		.cfi_startproc
+ 504              		@ args = 0, pretend = 0, frame = 0
+ 505              		@ frame_needed = 0, uses_anonymous_args = 0
+ 506              		.loc 1 149 1 is_stmt 0 view .LVU131
+ 507 0000 70B5     		push	{r4, r5, r6, lr}
+ 508              	.LCFI6:
+ 509              		.cfi_def_cfa_offset 16
+ 510              		.cfi_offset 4, -16
+ 511              		.cfi_offset 5, -12
+ 512              		.cfi_offset 6, -8
+ 513              		.cfi_offset 14, -4
+ 514 0002 0500     		movs	r5, r0
+ 150:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 151:Drivers/Flash/FLASH_PAGE_G0.c **** 	float2Bytes(bytes_temp, Num);
+ 515              		.loc 1 151 2 is_stmt 1 view .LVU132
+ 516 0004 044C     		ldr	r4, .L31
+ 517 0006 2000     		movs	r0, r4
+ 518              	.LVL51:
+ 519              		.loc 1 151 2 is_stmt 0 view .LVU133
+ 520 0008 FFF7FEFF 		bl	float2Bytes
+ 521              	.LVL52:
+ 152:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 153:Drivers/Flash/FLASH_PAGE_G0.c **** 	Flash_Write_Data (StartSectorAddress, (uint32_t *)bytes_temp, 1);
+ 522              		.loc 1 153 2 is_stmt 1 view .LVU134
+ 523 000c 0122     		movs	r2, #1
+ 524 000e 2100     		movs	r1, r4
+ 525 0010 2800     		movs	r0, r5
+ 526 0012 FFF7FEFF 		bl	Flash_Write_Data
+ 527              	.LVL53:
+ 154:Drivers/Flash/FLASH_PAGE_G0.c **** }
+ 528              		.loc 1 154 1 is_stmt 0 view .LVU135
+ 529              		@ sp needed
+ 530              	.LVL54:
+ 531              		.loc 1 154 1 view .LVU136
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 13
+
+
+ 532 0016 70BD     		pop	{r4, r5, r6, pc}
+ 533              	.L32:
+ 534              		.align	2
+ 535              	.L31:
+ 536 0018 00000000 		.word	bytes_temp
+ 537              		.cfi_endproc
+ 538              	.LFE299:
+ 540              		.section	.text.Flash_Read_NUM,"ax",%progbits
+ 541              		.align	1
+ 542              		.global	Flash_Read_NUM
+ 543              		.syntax unified
+ 544              		.code	16
+ 545              		.thumb_func
+ 547              	Flash_Read_NUM:
+ 548              	.LVL55:
+ 549              	.LFB300:
+ 155:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 156:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 157:Drivers/Flash/FLASH_PAGE_G0.c **** float Flash_Read_NUM (uint32_t StartSectorAddress)
+ 158:Drivers/Flash/FLASH_PAGE_G0.c **** {
+ 550              		.loc 1 158 1 is_stmt 1 view -0
+ 551              		.cfi_startproc
+ 552              		@ args = 0, pretend = 0, frame = 8
+ 553              		@ frame_needed = 0, uses_anonymous_args = 0
+ 554              		.loc 1 158 1 is_stmt 0 view .LVU138
+ 555 0000 00B5     		push	{lr}
+ 556              	.LCFI7:
+ 557              		.cfi_def_cfa_offset 4
+ 558              		.cfi_offset 14, -4
+ 559 0002 83B0     		sub	sp, sp, #12
+ 560              	.LCFI8:
+ 561              		.cfi_def_cfa_offset 16
+ 159:Drivers/Flash/FLASH_PAGE_G0.c **** 	uint8_t buffer[4];
+ 562              		.loc 1 159 2 is_stmt 1 view .LVU139
+ 160:Drivers/Flash/FLASH_PAGE_G0.c **** 	float value;
+ 563              		.loc 1 160 2 view .LVU140
+ 161:Drivers/Flash/FLASH_PAGE_G0.c **** 
+ 162:Drivers/Flash/FLASH_PAGE_G0.c **** 	Flash_Read_Data(StartSectorAddress, (uint32_t *)buffer, 1);
+ 564              		.loc 1 162 2 view .LVU141
+ 565 0004 0122     		movs	r2, #1
+ 566 0006 01A9     		add	r1, sp, #4
+ 567 0008 FFF7FEFF 		bl	Flash_Read_Data
+ 568              	.LVL56:
+ 163:Drivers/Flash/FLASH_PAGE_G0.c **** 	value = Bytes2float(buffer);
+ 569              		.loc 1 163 2 view .LVU142
+ 570              		.loc 1 163 10 is_stmt 0 view .LVU143
+ 571 000c 01A8     		add	r0, sp, #4
+ 572 000e FFF7FEFF 		bl	Bytes2float
+ 573              	.LVL57:
+ 164:Drivers/Flash/FLASH_PAGE_G0.c **** 	return value;
+ 574              		.loc 1 164 2 is_stmt 1 view .LVU144
+ 165:Drivers/Flash/FLASH_PAGE_G0.c **** }
+ 575              		.loc 1 165 1 is_stmt 0 view .LVU145
+ 576 0012 03B0     		add	sp, sp, #12
+ 577              		@ sp needed
+ 578 0014 00BD     		pop	{pc}
+ 579              		.cfi_endproc
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 14
+
+
+ 580              	.LFE300:
+ 582              		.section	.bss.EraseInitStruct.0,"aw",%nobits
+ 583              		.align	2
+ 586              	EraseInitStruct.0:
+ 587 0000 00000000 		.space	16
+ 587      00000000 
+ 587      00000000 
+ 587      00000000 
+ 588              		.global	bytes_temp
+ 589              		.section	.bss.bytes_temp,"aw",%nobits
+ 590              		.align	2
+ 593              	bytes_temp:
+ 594 0000 00000000 		.space	4
+ 595              		.text
+ 596              	.Letext0:
+ 597              		.file 2 "c:\\dev\\tools\\arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi\\arm-non
+ 598              		.file 3 "c:\\dev\\tools\\arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi\\arm-non
+ 599              		.file 4 "c:\\dev\\tools\\arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi\\lib\\gc
+ 600              		.file 5 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_def.h"
+ 601              		.file 6 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_flash.h"
+ 602              		.file 7 "c:\\dev\\tools\\arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi\\arm-non
+ 603              		.file 8 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_flash_ex.h"
+ 604              		.file 9 "Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_ll_dma.h"
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 FLASH_PAGE_G0.c
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:19     .text.GetPage:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:24     .text.GetPage:00000000 GetPage
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:79     .text.GetPage:00000028 $d
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:84     .text.float2Bytes:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:90     .text.float2Bytes:00000000 float2Bytes
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:141    .text.Bytes2float:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:147    .text.Bytes2float:00000000 Bytes2float
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:200    .text.Flash_Write_Data:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:206    .text.Flash_Write_Data:00000000 Flash_Write_Data
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:357    .text.Flash_Write_Data:0000007c $d
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:586    .bss.EraseInitStruct.0:00000000 EraseInitStruct.0
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:362    .text.Flash_Read_Data:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:368    .text.Flash_Read_Data:00000000 Flash_Read_Data
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:402    .text.Convert_To_Str:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:408    .text.Convert_To_Str:00000000 Convert_To_Str
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:493    .text.Flash_Write_NUM:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:499    .text.Flash_Write_NUM:00000000 Flash_Write_NUM
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:536    .text.Flash_Write_NUM:00000018 $d
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:593    .bss.bytes_temp:00000000 bytes_temp
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:541    .text.Flash_Read_NUM:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:547    .text.Flash_Read_NUM:00000000 Flash_Read_NUM
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:583    .bss.EraseInitStruct.0:00000000 $d
+C:\Users\Michael\AppData\Local\Temp\cc4bfHkZ.s:590    .bss.bytes_temp:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_FLASH_Unlock
+HAL_FLASHEx_Erase
+HAL_FLASH_Program
+HAL_FLASH_GetError
+HAL_FLASH_Lock
+strlen

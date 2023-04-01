@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "name": "STM32",
+      "includePath": [
+        "Core/Inc",
+        "Drivers/CMSIS/Device/ST/STM32G0xx/Include",
+        "Drivers/CMSIS/Include",
+        "Drivers/MIDI/",
+        "Drivers/STM32G0xx_HAL_Driver/Inc",
+        "Drivers/STM32G0xx_HAL_Driver/Inc/Legacy"
+      ],
+      "defines": [
+        "STM32G030xx",
+        "USE_HAL_DRIVER"
+      ],
+      "intelliSenseMode": "gcc-arm",
+      "compilerPath": "C:\\DEV\\TOOLS\\ARM-GNU-TOOLCHAIN-12.2.MPACBTI-BET1-MINGW-W64-I686-ARM-NONE-EABI\\BIN\\ARM-NONE-EABI-G++.EXE"
+
+    }
+  ],
+  "version": 4
+}

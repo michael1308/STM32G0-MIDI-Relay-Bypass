@@ -1,0 +1,551 @@
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 1
+
+
+   1              		.cpu cortex-m0plus
+   2              		.arch armv6s-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.file	"MIDI.cpp"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.file 1 "Drivers/MIDI/MIDI.cpp"
+  18              		.section	.text._ZN4midi11encodeSysExEPKhPhjb,"ax",%progbits
+  19              		.align	1
+  20              		.global	_ZN4midi11encodeSysExEPKhPhjb
+  21              		.syntax unified
+  22              		.code	16
+  23              		.thumb_func
+  25              	_ZN4midi11encodeSysExEPKhPhjb:
+  26              		.fnstart
+  27              	.LVL0:
+  28              	.LFB101:
+   1:Drivers/MIDI/MIDI.cpp **** /*!
+   2:Drivers/MIDI/MIDI.cpp ****  *  @file       MIDI.cpp
+   3:Drivers/MIDI/MIDI.cpp ****  *  Project     Arduino MIDI Library
+   4:Drivers/MIDI/MIDI.cpp ****  *  @brief      MIDI Library for the Arduino
+   5:Drivers/MIDI/MIDI.cpp ****  *  @author     Francois Best
+   6:Drivers/MIDI/MIDI.cpp ****  *  @date       24/02/11
+   7:Drivers/MIDI/MIDI.cpp ****  *  @license    MIT - Copyright (c) 2015 Francois Best
+   8:Drivers/MIDI/MIDI.cpp ****  *
+   9:Drivers/MIDI/MIDI.cpp ****  * Permission is hereby granted, free of charge, to any person obtaining a copy
+  10:Drivers/MIDI/MIDI.cpp ****  * of this software and associated documentation files (the "Software"), to deal
+  11:Drivers/MIDI/MIDI.cpp ****  * in the Software without restriction, including without limitation the rights
+  12:Drivers/MIDI/MIDI.cpp ****  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  13:Drivers/MIDI/MIDI.cpp ****  * copies of the Software, and to permit persons to whom the Software is
+  14:Drivers/MIDI/MIDI.cpp ****  * furnished to do so, subject to the following conditions:
+  15:Drivers/MIDI/MIDI.cpp ****  *
+  16:Drivers/MIDI/MIDI.cpp ****  * The above copyright notice and this permission notice shall be included in
+  17:Drivers/MIDI/MIDI.cpp ****  * all copies or substantial portions of the Software.
+  18:Drivers/MIDI/MIDI.cpp ****  *
+  19:Drivers/MIDI/MIDI.cpp ****  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  20:Drivers/MIDI/MIDI.cpp ****  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  21:Drivers/MIDI/MIDI.cpp ****  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  22:Drivers/MIDI/MIDI.cpp ****  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  23:Drivers/MIDI/MIDI.cpp ****  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  24:Drivers/MIDI/MIDI.cpp ****  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  25:Drivers/MIDI/MIDI.cpp ****  * THE SOFTWARE.
+  26:Drivers/MIDI/MIDI.cpp ****  */
+  27:Drivers/MIDI/MIDI.cpp **** 
+  28:Drivers/MIDI/MIDI.cpp **** #include "MIDI.h"
+  29:Drivers/MIDI/MIDI.cpp **** 
+  30:Drivers/MIDI/MIDI.cpp **** // -----------------------------------------------------------------------------
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 2
+
+
+  31:Drivers/MIDI/MIDI.cpp **** 
+  32:Drivers/MIDI/MIDI.cpp **** BEGIN_MIDI_NAMESPACE
+  33:Drivers/MIDI/MIDI.cpp **** 
+  34:Drivers/MIDI/MIDI.cpp **** /*! \brief Encode System Exclusive messages.
+  35:Drivers/MIDI/MIDI.cpp ****  SysEx messages are encoded to guarantee transmission of data bytes higher than
+  36:Drivers/MIDI/MIDI.cpp ****  127 without breaking the MIDI protocol. Use this static method to convert the
+  37:Drivers/MIDI/MIDI.cpp ****  data you want to send.
+  38:Drivers/MIDI/MIDI.cpp ****  \param inData The data to encode.
+  39:Drivers/MIDI/MIDI.cpp ****  \param outSysEx The output buffer where to store the encoded message.
+  40:Drivers/MIDI/MIDI.cpp ****  \param inLength The length of the input buffer.
+  41:Drivers/MIDI/MIDI.cpp ****  \param inFlipHeaderBits True for Korg and other who store MSB in reverse order
+  42:Drivers/MIDI/MIDI.cpp ****  \return The length of the encoded output buffer.
+  43:Drivers/MIDI/MIDI.cpp ****  @see decodeSysEx
+  44:Drivers/MIDI/MIDI.cpp ****  Code inspired from Ruin & Wesen's SysEx encoder/decoder - http://ruinwesen.com
+  45:Drivers/MIDI/MIDI.cpp ****  */
+  46:Drivers/MIDI/MIDI.cpp **** unsigned encodeSysEx(const byte* inData,
+  47:Drivers/MIDI/MIDI.cpp ****                      byte* outSysEx,
+  48:Drivers/MIDI/MIDI.cpp ****                      unsigned inLength,
+  49:Drivers/MIDI/MIDI.cpp ****                      bool inFlipHeaderBits)
+  50:Drivers/MIDI/MIDI.cpp **** {
+  29              		.loc 1 50 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		.loc 1 50 1 is_stmt 0 view .LVU1
+  34 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 20
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42 0002 D646     		mov	lr, r10
+  43 0004 4F46     		mov	r7, r9
+  44 0006 4646     		mov	r6, r8
+  45 0008 C0B5     		push	{r6, r7, lr}
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 32
+  48              		.cfi_offset 8, -32
+  49              		.cfi_offset 9, -28
+  50              		.cfi_offset 10, -24
+  51 000a 8246     		mov	r10, r0
+  52 000c 9846     		mov	r8, r3
+  51:Drivers/MIDI/MIDI.cpp ****     unsigned outLength  = 0;     // Num bytes in output array.
+  53              		.loc 1 51 5 is_stmt 1 view .LVU2
+  54              	.LVL1:
+  52:Drivers/MIDI/MIDI.cpp ****     byte count          = 0;     // Num 7bytes in a block.
+  55              		.loc 1 52 5 view .LVU3
+  53:Drivers/MIDI/MIDI.cpp ****     outSysEx[0]         = 0;
+  56              		.loc 1 53 5 view .LVU4
+  57              		.loc 1 53 25 is_stmt 0 view .LVU5
+  58 000e 0023     		movs	r3, #0
+  59              	.LVL2:
+  60              		.loc 1 53 25 view .LVU6
+  61 0010 0B70     		strb	r3, [r1]
+  54:Drivers/MIDI/MIDI.cpp **** 
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 3
+
+
+  55:Drivers/MIDI/MIDI.cpp ****     for (unsigned i = 0; i < inLength; ++i)
+  62              		.loc 1 55 5 is_stmt 1 view .LVU7
+  63              	.LVL3:
+  64              	.LBB2:
+  65              		.loc 1 55 19 is_stmt 0 view .LVU8
+  66 0012 0026     		movs	r6, #0
+  67              	.LBE2:
+  52:Drivers/MIDI/MIDI.cpp ****     outSysEx[0]         = 0;
+  68              		.loc 1 52 10 view .LVU9
+  69 0014 0025     		movs	r5, #0
+  51:Drivers/MIDI/MIDI.cpp ****     byte count          = 0;     // Num 7bytes in a block.
+  70              		.loc 1 51 14 view .LVU10
+  71 0016 9C46     		mov	ip, r3
+  72              	.LBB5:
+  73              		.loc 1 55 5 view .LVU11
+  74 0018 0DE0     		b	.L2
+  75              	.LVL4:
+  76              	.L3:
+  77              	.LBB3:
+  56:Drivers/MIDI/MIDI.cpp ****     {
+  57:Drivers/MIDI/MIDI.cpp ****         const byte data = inData[i];
+  58:Drivers/MIDI/MIDI.cpp ****         const byte msb  = data >> 7;
+  59:Drivers/MIDI/MIDI.cpp ****         const byte body = data & 0x7f;
+  60:Drivers/MIDI/MIDI.cpp **** 
+  61:Drivers/MIDI/MIDI.cpp ****         outSysEx[0] |= (msb << (inFlipHeaderBits ? count : (6 - count)));
+  78              		.loc 1 61 50 discriminator 2 view .LVU12
+  79 001a 0620     		movs	r0, #6
+  80 001c 401B     		subs	r0, r0, r5
+  81 001e 8146     		mov	r9, r0
+  82              	.L4:
+  83              		.loc 1 61 29 discriminator 4 view .LVU13
+  84 0020 4846     		mov	r0, r9
+  85 0022 8340     		lsls	r3, r3, r0
+  86              	.LVL5:
+  87              		.loc 1 61 21 discriminator 4 view .LVU14
+  88 0024 1C43     		orrs	r4, r3
+  89 0026 0C70     		strb	r4, [r1]
+  90              	.LVL6:
+  62:Drivers/MIDI/MIDI.cpp ****         outSysEx[1 + count] = body;
+  91              		.loc 1 62 9 is_stmt 1 discriminator 4 view .LVU15
+  92              		.loc 1 62 20 is_stmt 0 discriminator 4 view .LVU16
+  93 0028 6C1C     		adds	r4, r5, #1
+  94              		.loc 1 62 29 discriminator 4 view .LVU17
+  95 002a 0F55     		strb	r7, [r1, r4]
+  63:Drivers/MIDI/MIDI.cpp **** 
+  64:Drivers/MIDI/MIDI.cpp ****         if (count++ == 6)
+  96              		.loc 1 64 9 is_stmt 1 discriminator 4 view .LVU18
+  97              		.loc 1 64 18 is_stmt 0 discriminator 4 view .LVU19
+  98 002c E4B2     		uxtb	r4, r4
+  99              	.LVL7:
+ 100              		.loc 1 64 9 discriminator 4 view .LVU20
+ 101 002e 062D     		cmp	r5, #6
+ 102 0030 0ED0     		beq	.L9
+ 103              	.LVL8:
+ 104              	.L5:
+ 105              		.loc 1 64 9 discriminator 4 view .LVU21
+ 106              	.LBE3:
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 4
+
+
+  55:Drivers/MIDI/MIDI.cpp ****     {
+ 107              		.loc 1 55 5 is_stmt 1 discriminator 2 view .LVU22
+ 108 0032 0136     		adds	r6, r6, #1
+ 109              	.LVL9:
+  55:Drivers/MIDI/MIDI.cpp ****     {
+ 110              		.loc 1 55 5 is_stmt 0 discriminator 2 view .LVU23
+ 111 0034 2500     		movs	r5, r4
+ 112              	.LVL10:
+ 113              	.L2:
+  55:Drivers/MIDI/MIDI.cpp ****     {
+ 114              		.loc 1 55 28 is_stmt 1 discriminator 1 view .LVU24
+ 115 0036 9642     		cmp	r6, r2
+ 116 0038 12D2     		bcs	.L10
+ 117              	.LBB4:
+  57:Drivers/MIDI/MIDI.cpp ****         const byte msb  = data >> 7;
+ 118              		.loc 1 57 9 view .LVU25
+  57:Drivers/MIDI/MIDI.cpp ****         const byte msb  = data >> 7;
+ 119              		.loc 1 57 20 is_stmt 0 view .LVU26
+ 120 003a 5346     		mov	r3, r10
+ 121 003c 9C5D     		ldrb	r4, [r3, r6]
+ 122              	.LVL11:
+  58:Drivers/MIDI/MIDI.cpp ****         const byte body = data & 0x7f;
+ 123              		.loc 1 58 9 is_stmt 1 view .LVU27
+  58:Drivers/MIDI/MIDI.cpp ****         const byte body = data & 0x7f;
+ 124              		.loc 1 58 20 is_stmt 0 view .LVU28
+ 125 003e E309     		lsrs	r3, r4, #7
+ 126              	.LVL12:
+  59:Drivers/MIDI/MIDI.cpp **** 
+ 127              		.loc 1 59 9 is_stmt 1 view .LVU29
+  59:Drivers/MIDI/MIDI.cpp **** 
+ 128              		.loc 1 59 20 is_stmt 0 view .LVU30
+ 129 0040 7F27     		movs	r7, #127
+ 130 0042 2740     		ands	r7, r4
+ 131              	.LVL13:
+  61:Drivers/MIDI/MIDI.cpp ****         outSysEx[1 + count] = body;
+ 132              		.loc 1 61 9 is_stmt 1 view .LVU31
+  61:Drivers/MIDI/MIDI.cpp ****         outSysEx[1 + count] = body;
+ 133              		.loc 1 61 19 is_stmt 0 view .LVU32
+ 134 0044 0C78     		ldrb	r4, [r1]
+ 135              	.LVL14:
+  61:Drivers/MIDI/MIDI.cpp ****         outSysEx[1 + count] = body;
+ 136              		.loc 1 61 50 view .LVU33
+ 137 0046 4046     		mov	r0, r8
+ 138 0048 0028     		cmp	r0, #0
+ 139 004a E6D0     		beq	.L3
+  61:Drivers/MIDI/MIDI.cpp ****         outSysEx[1 + count] = body;
+ 140              		.loc 1 61 50 discriminator 1 view .LVU34
+ 141 004c A946     		mov	r9, r5
+ 142 004e E7E7     		b	.L4
+ 143              	.LVL15:
+ 144              	.L9:
+  65:Drivers/MIDI/MIDI.cpp ****         {
+  66:Drivers/MIDI/MIDI.cpp ****             outSysEx   += 8;
+ 145              		.loc 1 66 13 is_stmt 1 view .LVU35
+  67:Drivers/MIDI/MIDI.cpp ****             outLength  += 8;
+ 146              		.loc 1 67 13 view .LVU36
+ 147              		.loc 1 67 24 is_stmt 0 view .LVU37
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 5
+
+
+ 148 0050 0823     		movs	r3, #8
+ 149 0052 9946     		mov	r9, r3
+ 150 0054 CC44     		add	ip, ip, r9
+ 151              	.LVL16:
+  68:Drivers/MIDI/MIDI.cpp ****             outSysEx[0] = 0;
+ 152              		.loc 1 68 13 is_stmt 1 view .LVU38
+ 153              		.loc 1 68 25 is_stmt 0 view .LVU39
+ 154 0056 0023     		movs	r3, #0
+ 155 0058 0B72     		strb	r3, [r1, #8]
+  69:Drivers/MIDI/MIDI.cpp ****             count       = 0;
+ 156              		.loc 1 69 13 is_stmt 1 view .LVU40
+ 157              	.LVL17:
+  66:Drivers/MIDI/MIDI.cpp ****             outLength  += 8;
+ 158              		.loc 1 66 24 is_stmt 0 view .LVU41
+ 159 005a 0831     		adds	r1, r1, #8
+ 160              	.LVL18:
+ 161              		.loc 1 69 25 view .LVU42
+ 162 005c 0024     		movs	r4, #0
+ 163 005e E8E7     		b	.L5
+ 164              	.LVL19:
+ 165              	.L10:
+ 166              		.loc 1 69 25 view .LVU43
+ 167              	.LBE4:
+ 168              	.LBE5:
+  70:Drivers/MIDI/MIDI.cpp ****         }
+  71:Drivers/MIDI/MIDI.cpp ****     }
+  72:Drivers/MIDI/MIDI.cpp ****     return outLength + count + (count != 0 ? 1 : 0);
+ 169              		.loc 1 72 5 is_stmt 1 view .LVU44
+ 170              		.loc 1 72 22 is_stmt 0 view .LVU45
+ 171 0060 6346     		mov	r3, ip
+ 172 0062 E818     		adds	r0, r5, r3
+ 173              		.loc 1 72 44 view .LVU46
+ 174 0064 002D     		cmp	r5, #0
+ 175 0066 06D0     		beq	.L8
+ 176              	.LVL20:
+ 177              		.loc 1 72 44 view .LVU47
+ 178 0068 0123     		movs	r3, #1
+ 179              	.LVL21:
+ 180              	.L7:
+ 181              		.loc 1 72 51 discriminator 4 view .LVU48
+ 182 006a C018     		adds	r0, r0, r3
+  73:Drivers/MIDI/MIDI.cpp **** }
+ 183              		.loc 1 73 1 discriminator 4 view .LVU49
+ 184              		@ sp needed
+ 185              	.LVL22:
+ 186              	.LVL23:
+ 187              	.LVL24:
+ 188              		.loc 1 73 1 discriminator 4 view .LVU50
+ 189 006c E0BC     		pop	{r5, r6, r7}
+ 190 006e BA46     		mov	r10, r7
+ 191 0070 B146     		mov	r9, r6
+ 192 0072 A846     		mov	r8, r5
+ 193 0074 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 194              	.LVL25:
+ 195              	.L8:
+  72:Drivers/MIDI/MIDI.cpp **** }
+ 196              		.loc 1 72 44 view .LVU51
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 6
+
+
+ 197 0076 0023     		movs	r3, #0
+ 198              	.LVL26:
+  72:Drivers/MIDI/MIDI.cpp **** }
+ 199              		.loc 1 72 44 view .LVU52
+ 200 0078 F7E7     		b	.L7
+ 201              		.cfi_endproc
+ 202              	.LFE101:
+ 203              		.cantunwind
+ 204              		.fnend
+ 206              		.section	.text._ZN4midi11decodeSysExEPKhPhjb,"ax",%progbits
+ 207              		.align	1
+ 208              		.global	_ZN4midi11decodeSysExEPKhPhjb
+ 209              		.syntax unified
+ 210              		.code	16
+ 211              		.thumb_func
+ 213              	_ZN4midi11decodeSysExEPKhPhjb:
+ 214              		.fnstart
+ 215              	.LVL27:
+ 216              	.LFB102:
+  74:Drivers/MIDI/MIDI.cpp **** 
+  75:Drivers/MIDI/MIDI.cpp **** /*! \brief Decode System Exclusive messages.
+  76:Drivers/MIDI/MIDI.cpp ****  SysEx messages are encoded to guarantee transmission of data bytes higher than
+  77:Drivers/MIDI/MIDI.cpp ****  127 without breaking the MIDI protocol. Use this static method to reassemble
+  78:Drivers/MIDI/MIDI.cpp ****  your received message.
+  79:Drivers/MIDI/MIDI.cpp ****  \param inSysEx The SysEx data received from MIDI in.
+  80:Drivers/MIDI/MIDI.cpp ****  \param outData The output buffer where to store the decrypted message.
+  81:Drivers/MIDI/MIDI.cpp ****  \param inLength The length of the input buffer.
+  82:Drivers/MIDI/MIDI.cpp ****  \param inFlipHeaderBits True for Korg and other who store MSB in reverse order
+  83:Drivers/MIDI/MIDI.cpp ****  \return The length of the output buffer.
+  84:Drivers/MIDI/MIDI.cpp ****  @see encodeSysEx @see getSysExArrayLength
+  85:Drivers/MIDI/MIDI.cpp ****  Code inspired from Ruin & Wesen's SysEx encoder/decoder - http://ruinwesen.com
+  86:Drivers/MIDI/MIDI.cpp ****  */
+  87:Drivers/MIDI/MIDI.cpp **** unsigned decodeSysEx(const byte* inSysEx,
+  88:Drivers/MIDI/MIDI.cpp ****                      byte* outData,
+  89:Drivers/MIDI/MIDI.cpp ****                      unsigned inLength,
+  90:Drivers/MIDI/MIDI.cpp ****                      bool inFlipHeaderBits)
+  91:Drivers/MIDI/MIDI.cpp **** {
+ 217              		.loc 1 91 1 is_stmt 1 view -0
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 0
+ 220              		@ frame_needed = 0, uses_anonymous_args = 0
+ 221              		.loc 1 91 1 is_stmt 0 view .LVU54
+ 222 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 223              	.LCFI2:
+ 224              		.cfi_def_cfa_offset 20
+ 225              		.cfi_offset 4, -20
+ 226              		.cfi_offset 5, -16
+ 227              		.cfi_offset 6, -12
+ 228              		.cfi_offset 7, -8
+ 229              		.cfi_offset 14, -4
+ 230 0002 CE46     		mov	lr, r9
+ 231 0004 4746     		mov	r7, r8
+ 232 0006 80B5     		push	{r7, lr}
+ 233              	.LCFI3:
+ 234              		.cfi_def_cfa_offset 28
+ 235              		.cfi_offset 8, -28
+ 236              		.cfi_offset 9, -24
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 7
+
+
+ 237 0008 8446     		mov	ip, r0
+ 238 000a 8946     		mov	r9, r1
+ 239 000c 9846     		mov	r8, r3
+  92:Drivers/MIDI/MIDI.cpp ****     unsigned count  = 0;
+ 240              		.loc 1 92 5 is_stmt 1 view .LVU55
+ 241              	.LVL28:
+  93:Drivers/MIDI/MIDI.cpp ****     byte msbStorage = 0;
+ 242              		.loc 1 93 5 view .LVU56
+  94:Drivers/MIDI/MIDI.cpp ****     byte byteIndex  = 0;
+ 243              		.loc 1 94 5 view .LVU57
+  95:Drivers/MIDI/MIDI.cpp **** 
+  96:Drivers/MIDI/MIDI.cpp ****     for (unsigned i = 0; i < inLength; ++i)
+ 244              		.loc 1 96 5 view .LVU58
+ 245              	.LBB6:
+ 246              		.loc 1 96 19 is_stmt 0 view .LVU59
+ 247 000e 0024     		movs	r4, #0
+ 248              	.LBE6:
+  94:Drivers/MIDI/MIDI.cpp ****     byte byteIndex  = 0;
+ 249              		.loc 1 94 10 view .LVU60
+ 250 0010 0025     		movs	r5, #0
+  93:Drivers/MIDI/MIDI.cpp ****     byte byteIndex  = 0;
+ 251              		.loc 1 93 10 view .LVU61
+ 252 0012 0023     		movs	r3, #0
+ 253              	.LVL29:
+  92:Drivers/MIDI/MIDI.cpp ****     byte msbStorage = 0;
+ 254              		.loc 1 92 14 view .LVU62
+ 255 0014 0020     		movs	r0, #0
+ 256              	.LVL30:
+ 257              	.LBB11:
+ 258              		.loc 1 96 5 view .LVU63
+ 259 0016 12E0     		b	.L12
+ 260              	.LVL31:
+ 261              	.L13:
+ 262              	.LBB7:
+ 263              	.LBB8:
+  97:Drivers/MIDI/MIDI.cpp ****     {
+  98:Drivers/MIDI/MIDI.cpp ****         if ((i % 8) == 0)
+  99:Drivers/MIDI/MIDI.cpp ****         {
+ 100:Drivers/MIDI/MIDI.cpp ****             msbStorage = inSysEx[i];
+ 101:Drivers/MIDI/MIDI.cpp ****             byteIndex  = 6;
+ 102:Drivers/MIDI/MIDI.cpp ****         }
+ 103:Drivers/MIDI/MIDI.cpp ****         else
+ 104:Drivers/MIDI/MIDI.cpp ****         {
+ 105:Drivers/MIDI/MIDI.cpp ****             const byte body     = inSysEx[i];
+ 264              		.loc 1 105 13 is_stmt 1 view .LVU64
+ 265              		.loc 1 105 24 is_stmt 0 view .LVU65
+ 266 0018 6146     		mov	r1, ip
+ 267              	.LVL32:
+ 268              		.loc 1 105 24 view .LVU66
+ 269 001a 0F5D     		ldrb	r7, [r1, r4]
+ 270              	.LVL33:
+ 106:Drivers/MIDI/MIDI.cpp ****             const byte shift    = inFlipHeaderBits ? 6 - byteIndex : byteIndex;
+ 271              		.loc 1 106 13 is_stmt 1 view .LVU67
+ 272              		.loc 1 106 24 is_stmt 0 view .LVU68
+ 273 001c 4146     		mov	r1, r8
+ 274 001e 0029     		cmp	r1, #0
+ 275 0020 15D0     		beq	.L17
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 8
+
+
+ 276              		.loc 1 106 24 discriminator 1 view .LVU69
+ 277 0022 0626     		movs	r6, #6
+ 278 0024 761B     		subs	r6, r6, r5
+ 279 0026 F6B2     		uxtb	r6, r6
+ 280              	.L15:
+ 281              	.LVL34:
+ 107:Drivers/MIDI/MIDI.cpp ****             const byte msb      = byte(((msbStorage >> shift) & 1) << 7);
+ 282              		.loc 1 107 13 is_stmt 1 discriminator 4 view .LVU70
+ 283              		.loc 1 107 53 is_stmt 0 discriminator 4 view .LVU71
+ 284 0028 1900     		movs	r1, r3
+ 285 002a 3141     		asrs	r1, r1, r6
+ 286              		.loc 1 107 68 discriminator 4 view .LVU72
+ 287 002c CE01     		lsls	r6, r1, #7
+ 288              	.LVL35:
+ 289              		.loc 1 107 24 discriminator 4 view .LVU73
+ 290 002e F6B2     		uxtb	r6, r6
+ 291              	.LVL36:
+ 108:Drivers/MIDI/MIDI.cpp ****             byteIndex--;
+ 292              		.loc 1 108 13 is_stmt 1 discriminator 4 view .LVU74
+ 293              		.loc 1 108 22 is_stmt 0 discriminator 4 view .LVU75
+ 294 0030 013D     		subs	r5, r5, #1
+ 295              	.LVL37:
+ 296              		.loc 1 108 22 discriminator 4 view .LVU76
+ 297 0032 EDB2     		uxtb	r5, r5
+ 298              	.LVL38:
+ 109:Drivers/MIDI/MIDI.cpp ****             outData[count++] = msb | body;
+ 299              		.loc 1 109 13 is_stmt 1 discriminator 4 view .LVU77
+ 300              		.loc 1 109 36 is_stmt 0 discriminator 4 view .LVU78
+ 301 0034 3E43     		orrs	r6, r7
+ 302              	.LVL39:
+ 303              		.loc 1 109 30 discriminator 4 view .LVU79
+ 304 0036 4946     		mov	r1, r9
+ 305              	.LVL40:
+ 306              		.loc 1 109 30 discriminator 4 view .LVU80
+ 307 0038 0E54     		strb	r6, [r1, r0]
+ 308              		.loc 1 109 26 discriminator 4 view .LVU81
+ 309 003a 0130     		adds	r0, r0, #1
+ 310              	.LVL41:
+ 311              	.L14:
+ 312              		.loc 1 109 26 discriminator 4 view .LVU82
+ 313              	.LBE8:
+ 314              	.LBE7:
+  96:Drivers/MIDI/MIDI.cpp ****     {
+ 315              		.loc 1 96 5 is_stmt 1 discriminator 2 view .LVU83
+ 316 003c 0134     		adds	r4, r4, #1
+ 317              	.LVL42:
+ 318              	.L12:
+  96:Drivers/MIDI/MIDI.cpp ****     {
+ 319              		.loc 1 96 28 discriminator 1 view .LVU84
+ 320 003e 9442     		cmp	r4, r2
+ 321 0040 07D2     		bcs	.L18
+ 322              	.LBE11:
+  98:Drivers/MIDI/MIDI.cpp ****         {
+ 323              		.loc 1 98 9 view .LVU85
+ 324              	.LBB12:
+ 325              	.LBB10:
+ 326 0042 6607     		lsls	r6, r4, #29
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 9
+
+
+ 327 0044 E8D1     		bne	.L13
+ 100:Drivers/MIDI/MIDI.cpp ****             byteIndex  = 6;
+ 328              		.loc 1 100 13 view .LVU86
+ 100:Drivers/MIDI/MIDI.cpp ****             byteIndex  = 6;
+ 329              		.loc 1 100 24 is_stmt 0 view .LVU87
+ 330 0046 6346     		mov	r3, ip
+ 331              	.LVL43:
+ 100:Drivers/MIDI/MIDI.cpp ****             byteIndex  = 6;
+ 332              		.loc 1 100 24 view .LVU88
+ 333 0048 1B5D     		ldrb	r3, [r3, r4]
+ 334              	.LVL44:
+ 101:Drivers/MIDI/MIDI.cpp ****         }
+ 335              		.loc 1 101 13 is_stmt 1 view .LVU89
+ 101:Drivers/MIDI/MIDI.cpp ****         }
+ 336              		.loc 1 101 24 is_stmt 0 view .LVU90
+ 337 004a 0625     		movs	r5, #6
+ 338 004c F6E7     		b	.L14
+ 339              	.LVL45:
+ 340              	.L17:
+ 341              	.LBB9:
+ 106:Drivers/MIDI/MIDI.cpp ****             const byte msb      = byte(((msbStorage >> shift) & 1) << 7);
+ 342              		.loc 1 106 24 view .LVU91
+ 343 004e 2E00     		movs	r6, r5
+ 344 0050 EAE7     		b	.L15
+ 345              	.LVL46:
+ 346              	.L18:
+ 106:Drivers/MIDI/MIDI.cpp ****             const byte msb      = byte(((msbStorage >> shift) & 1) << 7);
+ 347              		.loc 1 106 24 view .LVU92
+ 348              	.LBE9:
+ 349              	.LBE10:
+ 350              	.LBE12:
+ 110:Drivers/MIDI/MIDI.cpp ****         }
+ 111:Drivers/MIDI/MIDI.cpp ****     }
+ 112:Drivers/MIDI/MIDI.cpp ****     return count;
+ 351              		.loc 1 112 5 is_stmt 1 view .LVU93
+ 113:Drivers/MIDI/MIDI.cpp **** }
+ 352              		.loc 1 113 1 is_stmt 0 view .LVU94
+ 353              		@ sp needed
+ 354              	.LVL47:
+ 355              	.LVL48:
+ 356              		.loc 1 113 1 view .LVU95
+ 357 0052 C0BC     		pop	{r6, r7}
+ 358 0054 B946     		mov	r9, r7
+ 359 0056 B046     		mov	r8, r6
+ 360 0058 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 361              		.cfi_endproc
+ 362              	.LFE102:
+ 363              		.cantunwind
+ 364              		.fnend
+ 366              		.text
+ 367              	.Letext0:
+ 368              		.file 2 "c:\\dev\\tools\\arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi\\arm-non
+ 369              		.file 3 "c:\\dev\\tools\\arm-gnu-toolchain-12.2.mpacbti-bet1-mingw-w64-i686-arm-none-eabi\\arm-non
+ 370              		.file 4 "Drivers/MIDI/midi_Defs.h"
+ 371              		.file 5 "Drivers/MIDI/midi_Namespace.h"
+ARM GAS  C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 MIDI.cpp
+C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s:19     .text._ZN4midi11encodeSysExEPKhPhjb:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s:25     .text._ZN4midi11encodeSysExEPKhPhjb:00000000 _ZN4midi11encodeSysExEPKhPhjb
+.ARM.exidx.text._ZN4midi11encodeSysExEPKhPhjb:00000000 $d
+C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s:207    .text._ZN4midi11decodeSysExEPKhPhjb:00000000 $t
+C:\Users\Michael\AppData\Local\Temp\ccXJusZN.s:213    .text._ZN4midi11decodeSysExEPKhPhjb:00000000 _ZN4midi11decodeSysExEPKhPhjb
+.ARM.exidx.text._ZN4midi11decodeSysExEPKhPhjb:00000000 $d
+
+NO UNDEFINED SYMBOLS
